@@ -1,0 +1,35 @@
+﻿
+@model List<WebApplication3.Models.BankBranch>
+
+    <h2>Bank Branches</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Branch Name</th>
+                <th>Location Name</th>
+                <th>Branch Manager</th>
+                <th>Employee Count</th>
+            <th>Location URL</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var branch in Model)
+            {
+            <tr>
+                <td>@branch.branchName</td>
+                <td>@branch.location</td>
+                <td>@branch.branchManager</td>
+                <td>@branch.employeeCount</td>
+                <td><a href="@branch.locationURL">@branch.locationURL</a></td>
+
+                <td>
+                    <a class="btn btn-success" asp-action="Details" asp-route-id="@branch.branchId">Branch Info</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    <a class="btn btn-success" asp-asp-controller="Bank" asp-action="Create">Add Branch</a>
+
+    </table>

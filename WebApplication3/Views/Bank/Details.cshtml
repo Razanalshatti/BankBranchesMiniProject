@@ -1,0 +1,51 @@
+﻿@* 
+    
+ 
+@model BankBranch
+
+    <h1>Branch Details</h1>
+
+    <div>
+        <h6>Branch:</h6>
+    <p>@Html.DisplayFor(model => model.branchName)</p>
+    <h6>Area:</h6>
+    <p> @Html.DisplayFor(model => model.location)</p>
+    <h6>Location</h6>
+    <p><a href="@Html.DisplayFor(model => model.locationURL)">@Html.DisplayFor(model => model.locationURL)</a></p>
+    <h6>Branch Manager:</h6>
+    <p>@Html.DisplayFor(model => model.branchManager)</p>
+    <h6>Employees</h6>
+    <p>@Html.DisplayFor(model => model.employeeCount)</p>
+
+    </div>
+
+ *@
+ @model BankBranch
+<h1>Branch Details</h1>
+
+<div>
+    <table>
+        <tr>
+        </tr>
+        <tr>
+            <th>Branch: </th>
+            <td>@Html.DisplayFor(model => model.branchName)</td>
+        </tr>
+        <tr>
+            <th>Area: </th>
+            <td>@Html.DisplayFor(model => model.location)</td>
+        </tr>
+        <tr>
+            <th>Location: </th>
+            <td><a href="@Html.DisplayFor(model => model.locationURL)">@Html.DisplayFor(model => model.locationURL)</a></td>
+        </tr>
+        <tr>
+            <th>Branch Manager: </th>
+            <td>@Html.DisplayFor(model => model.branchManager)</td>
+        </tr>
+        <tr>
+            <th>Employees: </th>
+            <td>@Html.DisplayFor(model => model.employeeCount)</td>
+        </tr>
+    </table>
+</div>
