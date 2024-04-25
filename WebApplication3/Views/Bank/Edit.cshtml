@@ -1,0 +1,33 @@
+﻿
+@model WebApplication3.Models.BankBranch
+
+
+<h2>Edit Bank Branch Details</h2>
+
+<form asp-action="Edit" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="location" class="control-label"></label>
+        <input asp-for="location" class="form-control" />
+        <span asp-validation-for="location" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="branchManager" class="control-label"></label>
+        <input asp-for="branchManager" class="form-control" />
+        <span asp-validation-for="branchManager" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="employeeCount" class="control-label"></label>
+        <input asp-for="employeeCount" class="form-control" />
+        <span asp-validation-for="employeeCount" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="locationURL" class="control-label"></label>
+        <input asp-for="locationURL" class="form-control" />
+        <span asp-validation-for="locationURL" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>

@@ -1,13 +1,45 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
 {
     public class BankController : Controller
     {
+        private readonly BankContext _context;
+
+        public BankController(BankContext context)
+        {
+            _context = context;
+        }
+      
+
+
         public IActionResult Index()
         {
-            return View(BankBranchData.BankBranches);
+            BankContext bankContext = _context;
+            var viewModel = new BankDashboard();
+            viewModel.TotalBranches = bankContext.BankBranches.Count();
+            viewModel.TotalEmployees = bankContext.Employees.Count();
+            viewModel.BranchWithMostEmployees = bankContext.BankBranches
+                .OrderByDescending(b => b.Employees.Count)
+                .FirstOrDefault();
+            viewModel.BranchList = bankContext.BankBranches
+                .Include(b => b.Employees)
+                .ToList();
+            return View(viewModel);
+        }
+        public IActionResult Details(int id)
+        {
+            BankContext bankContext = _context;
+            var branches = bankContext.BankBranches.Include(r => r.Employees).First(x => x.Id == id);
+
+
+            if (branches == null)
+            {
+                return NotFound();
+            }
+            return View(branches);
         }
         [HttpGet]
         public IActionResult Create()
@@ -19,28 +51,101 @@ namespace WebApplication3.Controllers
         {
             if (ModelState.IsValid)
             {
-                var branchName = form.branchName;
-                var location = form.location;
-                var locationURL = form.locationURL;
-                var branchManager = form.branchMnager;
-                var employeeCount = form.employeeCount;
+                BankContext bankContext = _context;
 
-                BankBranchData.BankBranches.Add(new BankBranch { branchName = branchName, location = location,locationURL = locationURL,branchManager = branchManager, employeeCount = employeeCount });
-                return RedirectToAction("Index","Bank");
+                var branch = new BankBranch
+                {
+                   // branchName = form.branchName,
+                    location = form.location,
+                    branchManager = form.branchManager,
+                    employeeCount = form.employeeCount,
+                    locationURL = form.locationURL
+                };
+                bankContext.BankBranches.Add(branch);
+                bankContext.SaveChanges();
+                return RedirectToAction("Index", "Bank");
             }
-            return View();
+            return View(form);
+
         }
-
-            public IActionResult Details(int id)
+        [HttpGet]
+        public IActionResult Edit(int id)
         {
-            var BankBranch = BankBranchData.BankBranches.FirstOrDefault(branch => branch.branchId == id);
+            BankContext bankContext = _context;
 
-            if (BankBranch == null)
+            var branch = bankContext.BankBranches.Find(id);
+
+            if (branch == null)
             {
                 return NotFound();
             }
-            return View(BankBranch);
-        }
 
+            return View(branch);
+        }
+        [HttpPost]
+        public IActionResult Edit(int id, BankBranch branch)
+        {
+            BankContext bankContext = _context;
+
+            if (id != branch.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    bankContext.Update(branch);
+                    bankContext.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!BankBranchExists(branch.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            return View(branch);
+        }
+        private bool BankBranchExists(int id)
+        {
+            BankContext bankContext = _context;
+
+            return bankContext.BankBranches.Any(e => e.Id == id);
+        }
+        public IActionResult AddEmployee(int id)
+        {
+
+            //ViewBag.BranchId = id;
+            return View();
+
+        }
+        [HttpPost]
+        public IActionResult AddEmployee(int id, AddEmployeeForm employee)
+        {
+            if (ModelState.IsValid)
+            {
+                var database = _context;
+                var bankbranch = database.BankBranches.Find(id);
+                var addEmployee = new Employee();
+
+                addEmployee.Name = employee.Name;
+                addEmployee.civilId = employee.civilId;
+                addEmployee.Position = employee.position;
+                bankbranch.Employees.Add(addEmployee);
+                database.SaveChanges();
+                return RedirectToAction("Details", new { id = id });
+            }
+            return View(employee);
+
+        }
     }
+
 }

@@ -1,12 +1,12 @@
 ﻿
-@model List<WebApplication3.Models.BankBranch>
-
+@* @model List<WebApplication3.Models.BankBranch>
+ *@
     <h2>Bank Branches</h2>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Branch Name</th>
+             
                 <th>Location Name</th>
                 <th>Branch Manager</th>
                 <th>Employee Count</th>
@@ -15,17 +15,17 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var branch in Model)
+            @foreach (var branch in Model.BranchList)
             {
             <tr>
-                <td>@branch.branchName</td>
-                <td>@branch.location</td>
+@*                 <td>@branch.branchName</td>
+ *@                <td>@branch.location</td>
                 <td>@branch.branchManager</td>
                 <td>@branch.employeeCount</td>
                 <td><a href="@branch.locationURL">@branch.locationURL</a></td>
 
                 <td>
-                    <a class="btn btn-success" asp-action="Details" asp-route-id="@branch.branchId">Branch Info</a>
+                    <a class="btn btn-success" asp-action="Details" asp-route-id="@branch.Id">Branch Info</a>
                 </td>
             </tr>
         }
@@ -33,3 +33,31 @@
     <a class="btn btn-success" asp-asp-controller="Bank" asp-action="Create">Add Branch</a>
 
     </table>
+
+    
+@model BankDashboard
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Total Branches</h5>
+                <p class="card-text">@Model.TotalBranches</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Total Employees</h5>
+                <p class="card-text">@Model.TotalEmployees</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <canvas id="employeeChart"></canvas>
+    </div>
+</div>

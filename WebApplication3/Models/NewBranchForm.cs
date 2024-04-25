@@ -4,9 +4,9 @@ namespace WebApplication3.Models
 {
     public class NewBranchForm
     {
-        [Required(ErrorMessage ="Branch name is required!!")]
-        [Display(Name = "Branch Name")]
-        public string branchName { get; set; }
+        //[Required(ErrorMessage ="Branch name is required!!")]
+        //[Display(Name = "Branch Name")]
+        //public string branchName { get; set; }
 
 
 
@@ -25,7 +25,7 @@ namespace WebApplication3.Models
 
         [Display(Name = "Branch Manager Name")]
         [Required(ErrorMessage = "Branch manager is required!!")]
-        public string branchMnager { get; set; }
+        public string branchManager { get; set; }
 
 
 
