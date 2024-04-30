@@ -1,16 +1,20 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
 @* @model List<WebApplication3.Models.BankBranch>
  *@
-    <h2>Bank Branches</h2>
+
+ @inject IViewLocalizer local
+
+<h2>@local["Bank Branches"]</h2>
 
     <table class="table">
         <thead>
             <tr>
              
-                <th>Location Name</th>
-                <th>Branch Manager</th>
-                <th>Employee Count</th>
-            <th>Location URL</th>
+                <th>@local["Location Name"]</th>
+                <th>@local["Branch Manager"]</th>
+                <th>@local["Employee Count"]</th>
+            <th>@local["Location URL"]</th>
 
             </tr>
         </thead>
@@ -40,7 +44,7 @@
     <div class="col-md-3">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Total Branches</h5>
+                <h5 class="card-title">@local["Total Branches"]"</h5>
                 <p class="card-text">@Model.TotalBranches</p>
             </div>
         </div>
@@ -48,7 +52,7 @@
     <div class="col-md-3">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Total Employees</h5>
+                <h5 class="card-title">@local["Total Employees"]</h5>
                 <p class="card-text">@Model.TotalEmployees</p>
             </div>
         </div>

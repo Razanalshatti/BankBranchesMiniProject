@@ -4,9 +4,7 @@ namespace WebApplication3.Models
 {
     public class NewBranchForm
     {
-        //[Required(ErrorMessage ="Branch name is required!!")]
-        //[Display(Name = "Branch Name")]
-        //public string branchName { get; set; }
+        [Required] public int Id { get; set; }
 
 
 

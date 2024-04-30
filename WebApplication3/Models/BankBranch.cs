@@ -3,7 +3,6 @@
     public class BankBranch
     {
         public int Id { get; set; }
-        //public string branchName { get; set; }
         public string location { get; set; }
         public string locationURL { get; set; }
         public string branchManager { get; set; }
